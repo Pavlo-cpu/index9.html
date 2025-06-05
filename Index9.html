@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Форми та взаємодія з JavaScript</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f9ff;
+            padding: 40px;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            max-width: 700px;
+            margin: auto;
+            border-radius: 12px;
+            box-shadow: 0 0 20px #00000010;
+        }
+        h2 {
+            text-align: center;
+            color: #2674a7;
+        }
+        form {
+            margin-top: 20px;
+        }
+        .row {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 6px;
+            color: #24577a;
+        }
+        input, select, textarea, button {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #a0cbe6;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+        input[type="radio"], input[type="checkbox"] {
+            width: auto;
+            margin-right: 8px;
+        }
+        button {
+            background: #3bb4e5;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background: #2b9ccf;
+        }
+        .output {
+            margin-top: 20px;
+            background: #e7f8ed;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #b4e2cc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Калькулятор + форми</h2>
+
+        <!-- Основна форма -->
+        <form id="mainForm">
+            <div class="row">
+                <label for="number1">Число 1:</label>
+                <input type="number" id="number1" required>
+            </div>
+            <div class="row">
+                <label for="number2">Число 2:</label>
+                <input type="number" id="number2" required>
+            </div>
+            <div class="row">
+                <label for="operation">Операція:</label>
+                <select id="operation">
+                    <option value="add">Додавання</option>
+                    <option value="subtract">Віднімання</option>
+                    <option value="multiply">Множення</option>
+                    <option value="divide">Ділення</option>
+                </select>
+            </div>
+            <button type="submit">Обчислити</button>
+        </form>
+
+        <div class="output" id="calcResult"></div>
+
+        <!-- Додатковий приклад форми -->
+        <form id="infoForm" style="margin-top: 40px;">
+            <h3>Ваші вподобання</h3>
+            <div class="row">
+                <label>Обери улюблений сезон:</label>
+                <input type="radio" name="season" value="Весна"> Весна
+                <input type="radio" name="season" value="Літо"> Літо
+                <input type="radio" name="season" value="Осінь"> Осінь
+                <input type="radio" name="season" value="Зима"> Зима
+            </div>
+            <div class="row">
+                <label for="feedback">Відгук про сайт:</label>
+                <textarea id="feedback" placeholder="Ваша думка..."></textarea>
+            </div>
+            <button type="submit">Надіслати</button>
+        </form>
+        <div class="output" id="formInfoResult"></div>
+    </div>
+
+    <script>
+        // Обробка калькулятора
+        document.getElementById('mainForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const num1 = parseFloat(document.getElementById('number1').value);
+            const num2 = parseFloat(document.getElementById('number2').value);
+            const op = document.getElementById('operation').value;
+
+            let result;
+            switch (op) {
+                case 'add': result = num1 + num2; break;
+                case 'subtract': result = num1 - num2; break;
+                case 'multiply': result = num1 * num2; break;
+                case 'divide':
+                    result = num2 !== 0 ? (num1 / num2) : "На нуль ділити не можна!";
+                    break;
+            }
+            document.getElementById('calcResult').innerHTML = `<strong>Результат:</strong> ${result}`;
+        });
+
+        // Обробка другої форми
+        document.getElementById('infoForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const season = document.querySelector('input[name="season"]:checked');
+            const feedback = document.getElementById('feedback').value;
+            const seasonVal = season ? season.value : "не обрано";
+
+            let msg = `<strong>Ваш сезон:</strong> ${seasonVal}<br><strong>Відгук:</strong> ${feedback}`;
+            document.getElementById('formInfoResult').innerHTML = msg;
+        });
+    </script>
+</body>
+</html>
